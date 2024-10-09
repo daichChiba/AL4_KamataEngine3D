@@ -12,7 +12,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Audio* audio = nullptr;
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
-	//
+	//ゲームシーンの作成
 	GameScene* gameScene = nullptr;
 
 
@@ -69,7 +69,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
-		//
+		//ゲームシーンの作成
 		gameScene->Update();
 		// 軸表示の更新
 		axisIndicator->Update();
@@ -78,7 +78,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		// 描画開始
 		dxCommon->PreDraw();
-		//
+		//ゲームシーンの作成
 		gameScene->Draw();
 		// 軸表示の描画
 		axisIndicator->Draw();
