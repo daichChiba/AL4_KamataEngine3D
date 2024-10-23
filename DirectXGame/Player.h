@@ -1,39 +1,40 @@
 #pragma once
-#include<KamataEngine.h>
+#include <KamataEngine.h>
 using namespace KamataEngine;
 
+/// <summary>
+/// 自キャラ
+/// </summary>
+class Player {
+public:
 	/// <summary>
-	/// 自キャラ
+	/// 初期化
 	/// </summary>
-	class Player {
-	public:
-		/// <summary>
-		/// 初期化
-		/// </summary>
-	    /// <param name="model>モデル</param>
-	    /// <param name="textureHandle>テクスチャハンドル</param>
-	    void Initialize(Model* model, uint32_t textureHandle);
+	/// <param name="model>モデル</param>
+	/// <param name="textureHandle>テクスチャハンドル</param>
+	void Initialize(Model* model, uint32_t textureHandle);
 
-		/// <summary>
-		/// 更新
-		/// </summary>
-		void Update();
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update();
 
-		/// <summary>
-		/// 描画
-		/// </summary>
-	    /// <param name="vierProjection>ビュープロジェクション(参照渡し)</param>
-		void Draw(Camera&viewProjection);
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="vierProjection>ビュープロジェクション(参照渡し)</param>
+	void Draw(Camera& viewProjection);
 
-	private:
-		//ワールド変換データ
-		WorldTransform worldTransform_;
-		//モデル
-		Model* model_ = nullptr;
-		//テクスチャハンドル
-		uint32_t textureHandle_ = 0u;
+private:
+	// ワールド変換データ
+	WorldTransform worldTransform_;
+	// モデル
+	Model* model_ = nullptr;
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0u;
 
-	};
+	// キーボード入力
+	Input* input_ = nullptr;
 
-
-
+	//
+};
