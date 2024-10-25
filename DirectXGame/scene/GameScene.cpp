@@ -85,7 +85,6 @@ void GameScene::Update() {
 
 	}
 
-
 }
 
 void GameScene::Draw() {
