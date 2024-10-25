@@ -31,6 +31,7 @@ void Player::Update() {
 	// キャラクターの移動速度
 	const float kCharacterSpeed = 0.2f;
 
+
 	// 押したところに移動ベクトルの変更(左右)
 	if (input_->PushKey(DIK_LEFT)) {
 		move.x -= kCharacterSpeed;
