@@ -4,6 +4,12 @@
 using namespace KamataEngine;
 #include "MathUtliltyForText.h"
 
+Player::~Player() {
+	for (PlayerBullet* bullet : bullets_) {
+		delete bullet;
+	}
+}
+
 void Player::Initialize(Model* model, uint32_t textureHandle) {
 	// NULLポインタチェック
 	assert(model);
@@ -50,8 +56,8 @@ void Player::Update() {
 	Attack();
 
 	// 球更新
-	if (bullet_) {
-		bullet_->Update();
+	for (PlayerBullet* bullet:bullets_) {
+		bullet->Update();
 	}
 
 	// キャラクターの座標を画面表示する処理
@@ -94,8 +100,8 @@ void Player::Draw(Camera& camera) {
 	model_->Draw(worldTransform_, camera, textureHandle_);
 
 	//弾描画
-	if (bullet_) {
-		bullet_->Draw(camera);
+	for (PlayerBullet* bullet : bullets_) {
+		bullet->Draw(camera);
 	}
 }
 
@@ -106,6 +112,6 @@ void Player::Attack() {
 		newBullet->Initialize(model_, worldTransform_.translation_);
 
 		//弾を登録する
-		bullet_ = newBullet;
+		bullets_.push_back(newBullet);
 	}
 }
