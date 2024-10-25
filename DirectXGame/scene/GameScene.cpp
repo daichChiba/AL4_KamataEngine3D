@@ -48,7 +48,7 @@ void GameScene::Initialize() {
 	enemy_ = new Enemy();
 	//　敵キャラの初期化
 	enemy_->Initialize(model_, enemyTextureHandle_,enemyPos);
-
+	enemy_->SetPlayer(player_);
 	debugCamera_ = new DebugCamera(640, 360);
 
 	// 軸方向表示の表示を有効にする

@@ -1,6 +1,7 @@
 #include "Enemy.h"
 using namespace KamataEngine;
 #include "MathUtliltyForText.h"
+#include "Player.h"
 
 int const Enemy::kFireInterval;
 
@@ -83,10 +84,21 @@ void Enemy::Draw(Camera& camera) {
 
 void Enemy::Fire() {
 	// 弾の速度
-	const float kBulletSpeed = 1.0f;
-	Vector3 velocity(0, 0, -kBulletSpeed);
+	const float kBulletSpeed = 0.05f;
+	Vector3 velocity(0, 0, 0);
 
-	// 速度ベクトルを自機の向きに合わせて回転させる
+	//自キャラのワールド座標を取得する
+	Vector3 playerPos = player_->GetWorldPosition();
+	//敵キャラのワールド座標を取得する
+	Vector3 enemyPos = GetWorldPosition();
+	//敵キャラから自キャラへの差分ベクトルを作成する
+	Vector3 enemy2player = playerPos - enemyPos;
+	//ベクトルの正規化
+	Normalize(enemy2player);
+	//ベクトルの長さを早さに合わせる
+	velocity = enemy2player * kBulletSpeed;
+
+	// 速度ベクトルを敵の向きに合わせて回転させる
 	velocity = Transform(velocity, worldTransform_.matWorld_);
 
 	// 弾を生成し、初期化
@@ -141,4 +153,15 @@ void Enemy::LeaveUpdate() {
 
 	// 移動(ベクトルの加算)
 	worldTransform_.translation_ += move;
+}
+
+Vector3 Enemy::GetWorldPosition() {
+	// ワールド座標を入れる変数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得(ワールド座標)
+	worldPos.x = worldTransform_.translation_.x;
+	worldPos.y = worldTransform_.translation_.y;
+	worldPos.z = worldTransform_.translation_.z;
+
+	return worldPos;
 }

@@ -2,6 +2,10 @@
 #include<KamataEngine.h>
 using namespace KamataEngine;
 #include "EnemyBullet.h"
+
+//自機クラスの前方宣言
+class Player;
+
 class Enemy {
 public:
 	
@@ -48,6 +52,14 @@ public:
 	// 離脱フェーズの更新関数
 	void LeaveUpdate();
 
+	//Player設定
+	void SetPlayer(Player* player) { player_ = player; }
+
+	/// <summary>
+	/// ワールド座標を取得
+	/// </summary>
+	Vector3 GetWorldPosition();
+
 
 private:
 	// ワールド変換データ
@@ -66,5 +78,8 @@ private:
 
 	//発射タイマー
 	int32_t FireTimer = 0;
+
+	//自キャラ
+	Player* player_ = nullptr;
 
 };

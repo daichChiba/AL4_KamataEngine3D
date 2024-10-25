@@ -8,7 +8,13 @@ Matrix4x4 MakeScaleMatrix(const Vector3& scale);
 Matrix4x4 MakeRotateXMatrix(float radian);
 Matrix4x4 MakeRotateYMatrix(float radian);
 Matrix4x4 MakeRotateZMatrix(float radian);
+//アフィン変換
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+// 長さ（ノルム）
+float Length(const Vector3& v);
+// 正規化
+Vector3 Normalize(const Vector3& v);
+
 // 　代入演算子オーバーロード
 // 　Vector3の足算
 Vector3& operator+=(Vector3& lhv, const Vector3& rhv);
