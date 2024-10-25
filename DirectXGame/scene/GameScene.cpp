@@ -16,12 +16,17 @@ GameScene::~GameScene() {
 	//デバックカメラの開放
 	delete debugCamera_;
 
+	//敵キャラの開放
+	delete enemy_;
+
+
 }
 
 void GameScene::Initialize() {
 
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("mario.jpg");
+	enemyTextureHandle_ = TextureManager::Load("enemy.png");
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
@@ -37,6 +42,13 @@ void GameScene::Initialize() {
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 
+
+	// 敵キャラの生成
+	Vector3 enemyPos = {10.0f, 100.0f, -10.0f};
+	enemy_ = new Enemy();
+	//　敵キャラの初期化
+	enemy_->Initialize(model_, enemyTextureHandle_,enemyPos);
+
 	debugCamera_ = new DebugCamera(640, 360);
 
 	// 軸方向表示の表示を有効にする
@@ -49,6 +61,8 @@ void GameScene::Initialize() {
 void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
+	// 敵キャラの更新
+	enemy_->Update();
 	//デバックカメラの更新
 	debugCamera_->Update();
 #ifdef _DEBUG
@@ -103,6 +117,8 @@ void GameScene::Draw() {
 
 	// 自キャラの描画
 	player_->Draw(camera_);
+	// 敵キャラの描画
+	enemy_->Draw(camera_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

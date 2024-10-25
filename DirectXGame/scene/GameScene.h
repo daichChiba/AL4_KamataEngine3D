@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Player.h"
-
+#include "Enemy.h"
 #include <vector>
 
 using namespace KamataEngine;
@@ -48,6 +48,8 @@ private: // メンバ変数
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
+	// 敵キャラのテクスチャハンドル
+	uint32_t enemyTextureHandle_ = 0;
 
 	// 3Dモデルデータ
 	Model* model_ = nullptr;
@@ -63,4 +65,7 @@ private: // メンバ変数
 
 	// 自キャラ
 	Player* player_ = nullptr;
+
+	// 敵キャラ
+	Enemy* enemy_ = nullptr;
 };
