@@ -1,7 +1,7 @@
 #pragma once
 #include <KamataEngine.h>
 using namespace KamataEngine;
-#include"../DirectXGame/PlayerBullet.h"
+#include "../DirectXGame/PlayerBullet.h"
 
 /// <summary>
 /// 自キャラ
@@ -16,7 +16,6 @@ public:
 	/// <param name="model>モデル</param>
 	/// <param name="textureHandle>テクスチャハンドル</param>
 	void Initialize(Model* model, uint32_t textureHandle);
-
 
 	/// <summary>
 	/// 更新
@@ -50,6 +49,6 @@ private:
 	// キーボード入力
 	Input* input_ = nullptr;
 
-	//弾
-	std::list<PlayerBullet*> bullets_ ;
+	// 弾
+	std::list<PlayerBullet*> bullets_;
 };

@@ -44,7 +44,7 @@ void GameScene::Initialize() {
 
 
 	// 敵キャラの生成
-	Vector3 enemyPos = {10.0f, 100.0f, -10.0f};
+	Vector3 enemyPos = {0.0f, 5.0f, 25.0f};
 	enemy_ = new Enemy();
 	//　敵キャラの初期化
 	enemy_->Initialize(model_, enemyTextureHandle_,enemyPos);

@@ -51,7 +51,7 @@ void Player::Update() {
 	worldTransform_.translation_.x += move.x;
 	worldTransform_.translation_.y += move.y;
 
-	//キャラクター攻撃処理
+	// キャラクター攻撃処理
 	Attack();
 
 	// 球更新
@@ -70,15 +70,16 @@ void Player::Update() {
 
 	// キャラクターの座標を画面表示する処理
 	ImGui::Begin("Debug1");
-	//ImGui::DragFloat3("player", &worldTransform_.translation_.x, 0.01f);
+	// ImGui::DragFloat3("player", &worldTransform_.translation_.x, 0.01f);
 	ImGui::InputFloat3("Inputfloat3", &worldTransform_.translation_.x);
+	ImGui::SliderFloat3("SliderFloat3", &worldTransform_.translation_.x, -10.0f, 10.0f);
 	ImGui::End();
 
-	//移動限界座標
+	// 移動限界座標
 	const float kMoveLimitX = 35;
 	const float kMoveLimitY = 19;
 
-	//範囲を超えない処理
+	// 範囲を超えない処理
 	worldTransform_.translation_.x = std::max(worldTransform_.translation_.x, -kMoveLimitX);
 	worldTransform_.translation_.x = std::min(worldTransform_.translation_.x, +kMoveLimitX);
 	worldTransform_.translation_.y = std::max(worldTransform_.translation_.y, -kMoveLimitY);
@@ -107,7 +108,7 @@ void Player::Draw(Camera& camera) {
 	// 3Dモデルの描画
 	model_->Draw(worldTransform_, camera, textureHandle_);
 
-	//弾描画
+	// 弾描画
 	for (PlayerBullet* bullet : bullets_) {
 		bullet->Draw(camera);
 	}
@@ -115,18 +116,18 @@ void Player::Draw(Camera& camera) {
 
 void Player::Attack() {
 	if (input_->TriggerKey(DIK_SPACE)) {
-		//弾の速度
-		const float kBulletSpeed = 0.1f;
+		// 弾の速度
+		const float kBulletSpeed = 1.0f;
 		Vector3 velocity(0, 0, kBulletSpeed);
 
-		//速度ベクトルを自機の向きに合わせて回転させる
+		// 速度ベクトルを自機の向きに合わせて回転させる
 		velocity = Transform(velocity, worldTransform_.matWorld_);
 
-		//弾を生成し、初期化
+		// 弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
-		newBullet->Initialize(model_, worldTransform_.translation_,velocity);
+		newBullet->Initialize(model_, worldTransform_.translation_, velocity);
 
-		//弾を登録する
+		// 弾を登録する
 		bullets_.push_back(newBullet);
 	}
 }
