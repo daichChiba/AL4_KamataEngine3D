@@ -2,6 +2,14 @@
 using namespace KamataEngine;
 #include "MathUtliltyForText.h"
 
+int const Enemy::kFireInterval;
+
+Enemy::~Enemy() {
+	for (EnemyBullet* bullet : bullets_) {
+		delete bullet;
+	}
+}
+
 void Enemy::Initialize(Model* model, uint32_t textureHandle, const Vector3& pos) {
 	// NULLポインタチェック
 	assert(model);
@@ -12,6 +20,9 @@ void Enemy::Initialize(Model* model, uint32_t textureHandle, const Vector3& pos)
 	// ワールド座標の初期化
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = pos;
+
+	ApproachInitialize();
+
 }
 
 void Enemy::Update() {
@@ -30,10 +41,27 @@ void Enemy::Update() {
 	switch (phase_) {
 	case Enemy::Phase::Approach:
 		ApproachUpdate();
+
 		break;
 	case Enemy::Phase::Leave:
 		LeaveUpdate();
 		break;
+	}
+
+
+
+	// 球更新
+	bullets_.remove_if([](EnemyBullet* bullet) {
+		if (bullet->IsDead()) {
+			delete bullet;
+			return true;
+		}
+		return false;
+	});
+
+	// 球更新
+	for (EnemyBullet* bullet : bullets_) {
+		bullet->Update();
 	}
 
 	// アフィン変換行列の作成
@@ -47,6 +75,32 @@ void Enemy::Update() {
 void Enemy::Draw(Camera& camera) {
 	// 3Dモデルの描画
 	model_->Draw(worldTransform_, camera, textureHandle_);
+	// 弾描画
+	for (EnemyBullet* bullet : bullets_) {
+		bullet->Draw(camera);
+	}
+}
+
+void Enemy::Fire() {
+	// 弾の速度
+	const float kBulletSpeed = 1.0f;
+	Vector3 velocity(0, 0, -kBulletSpeed);
+
+	// 速度ベクトルを自機の向きに合わせて回転させる
+	velocity = Transform(velocity, worldTransform_.matWorld_);
+
+	// 弾を生成し、初期化
+	EnemyBullet* newBullet = new EnemyBullet();
+	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
+
+	//bullet_ = newBullet;
+	// 弾を登録する
+	bullets_.push_back(newBullet);
+}
+
+void Enemy::ApproachInitialize() {
+	//発射タイマーを初期化
+	FireTimer = kFireInterval;
 }
 
 void Enemy::ApproachUpdate() {
@@ -59,6 +113,16 @@ void Enemy::ApproachUpdate() {
 
 	// 移動(ベクトルの加算)
 	worldTransform_.translation_ += move;
+
+	//発射タイマーカウントダウン
+	--FireTimer;
+	//指定時間に達した
+	if (FireTimer<=0) {
+		//弾を発射
+		Fire();
+		//発射タイマーを初期化
+		FireTimer = kFireInterval;
+	}
 
 	if (worldTransform_.translation_.z < 0.0f) {
 		phase_ = Phase::Leave;

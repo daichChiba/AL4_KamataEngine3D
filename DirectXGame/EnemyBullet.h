@@ -3,16 +3,16 @@
 using namespace KamataEngine;
 
 /// <summary>
-/// 自キャラの弾
+/// 敵の弾
 /// </summary>
-class PlayerBullet {
+class EnemyBullet {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="model>モデル</param>
 	/// <param name="textureHandle>テクスチャハンドル</param>
-	void Initialize(Model* model, const Vector3& pos,const Vector3& velocity);
+	void Initialize(Model* model, const Vector3& pos, const Vector3& velocity);
 
 	/// <summary>
 	/// 更新
@@ -30,6 +30,7 @@ public:
 
 	bool IsDead() const { return isDead_; }
 
+	
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -37,11 +38,12 @@ private:
 	Model* model_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
-	//速度
+	// 速度
 	Vector3 velocity_;
 
-	//デスタイマー
+	// デスタイマー
 	int32_t deathTimer_ = kLifeTime;
-	//デスフラグ
+	// デスフラグ
 	bool isDead_ = false;
+
 };

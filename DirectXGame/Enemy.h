@@ -1,6 +1,7 @@
 #pragma once
 #include<KamataEngine.h>
 using namespace KamataEngine;
+#include "EnemyBullet.h"
 class Enemy {
 public:
 	
@@ -9,6 +10,9 @@ public:
 		Approach,	//接近する
 		Leave,		//離脱する
 	};
+
+	//デストラクタ
+	~Enemy();
 
 	/// <summary>
 	/// 初期化
@@ -28,6 +32,22 @@ public:
 	/// <param name="camera>camera(参照渡し)</param>
 	void Draw(Camera& camera);
 
+	/// <summary>
+	/// 弾発射
+	/// </summary>
+	void Fire();
+
+	// 発射間隔
+	static const int kFireInterval = 60;
+
+	//接近フェーズ初期化
+	void ApproachInitialize();
+
+	// 接近フェーズの更新関数
+	void ApproachUpdate();
+	// 離脱フェーズの更新関数
+	void LeaveUpdate();
+
 
 private:
 	// ワールド変換データ
@@ -40,9 +60,11 @@ private:
 	//フェーズ
 	Phase phase_ = Phase::Approach;
 
-	// 接近フェーズの更新関数
-	void ApproachUpdate();
-	// 離脱フェーズの更新関数
-	void LeaveUpdate();
+
+	// 弾
+	std::list<EnemyBullet*> bullets_;
+
+	//発射タイマー
+	int32_t FireTimer = 0;
 
 };
