@@ -23,16 +23,18 @@ void Enemy::Update() {
 	//ImGui::SliderFloat3("SliderFloat", &worldTransform_.translation_.x, -10.0f, 10.0f);
 	//ImGui::End();
 
-	// キャラクターの移動ベクトル
-	Vector3 move = {0, 0, 0};
-	// キャラクターの移動速度
-	const float kCharacterSpeed = 0.2f;
 
-	move.z -= kCharacterSpeed;
 
-	// 座標移動(ベクトルの加算)
-	worldTransform_.translation_ += move;
 
+
+	switch (phase_) {
+	case Enemy::Phase::Approach:
+		ApproachUpdate();
+		break;
+	case Enemy::Phase::Leave:
+		LeaveUpdate();
+		break;
+	}
 
 	// アフィン変換行列の作成
 	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
@@ -45,4 +47,34 @@ void Enemy::Update() {
 void Enemy::Draw(Camera& camera) {
 	// 3Dモデルの描画
 	model_->Draw(worldTransform_, camera, textureHandle_);
+}
+
+void Enemy::ApproachUpdate() {
+	// キャラクターの移動ベクトル
+	Vector3 move = {0, 0, 0};
+	// 接近
+	const float kApproachSpeed = 0.2f;
+
+	move.z -= kApproachSpeed;
+
+	// 移動(ベクトルの加算)
+	worldTransform_.translation_ += move;
+
+	if (worldTransform_.translation_.z < 0.0f) {
+		phase_ = Phase::Leave;
+	}
+}
+
+void Enemy::LeaveUpdate() {
+	// キャラクターの移動ベクトル
+	Vector3 move = {0, 0, 0};
+	//　離脱
+	const float kLeaveSpeed = 0.1f;
+
+
+	move.x -= kLeaveSpeed;
+	move.y += kLeaveSpeed;
+
+	// 移動(ベクトルの加算)
+	worldTransform_.translation_ += move;
 }

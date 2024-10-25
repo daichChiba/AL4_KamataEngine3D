@@ -3,6 +3,13 @@
 using namespace KamataEngine;
 class Enemy {
 public:
+	
+	//行動フェーズ
+	enum class Phase {
+		Approach,	//接近する
+		Leave,		//離脱する
+	};
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -30,5 +37,12 @@ private:
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
+	//フェーズ
+	Phase phase_ = Phase::Approach;
+
+	// 接近フェーズの更新関数
+	void ApproachUpdate();
+	// 離脱フェーズの更新関数
+	void LeaveUpdate();
 
 };
