@@ -26,7 +26,7 @@ public:
 	void Draw(const Camera& camera);
 
 	// 寿命<frm>
-	static const int32_t kLifeTime = 60 * 3;
+	static const int32_t kLifeTime = 60 * 1;
 
 	bool IsDead() const { return isDead_; }
 
