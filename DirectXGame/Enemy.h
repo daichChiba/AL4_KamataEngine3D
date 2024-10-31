@@ -60,6 +60,14 @@ public:
 	/// </summary>
 	Vector3 GetWorldPosition();
 
+	//衝突を検知したら呼び出されるコールバック関数
+	void OnCollision();
+
+	// 弾リストを取得
+	const std::list<EnemyBullet*>& GetBullets() const { return bullets_; }
+
+	// 半径を取得
+	float GetRadius() { return radius_; }
 
 private:
 	// ワールド変換データ
@@ -72,6 +80,8 @@ private:
 	//フェーズ
 	Phase phase_ = Phase::Approach;
 
+	// 半径
+	float radius_ = 12.0f;
 
 	// 弾
 	std::list<EnemyBullet*> bullets_;

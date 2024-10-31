@@ -82,6 +82,15 @@ Vector3 Normalize(const Vector3& v) {
 	return {v.x / length, v.y / length, v.z / length};
 }
 
+//当たり判定
+Vector3 Sphere(Vector3 v1, Vector3 v2) {
+	Vector3 result;
+	result.x = (v2.x - v1.x) * (v2.x - v1.x);
+	result.y = (v2.y - v1.y) * (v2.y - v1.y);
+	result.z = (v2.z - v1.z) * (v2.z - v1.z);
+	return {result.x + result.y + result.z};
+}
+
 // Vector3の足算
 Vector3& operator+=(Vector3& lhv, const Vector3& rhv) {
 	lhv.x += rhv.x;
@@ -131,3 +140,4 @@ const Vector3 operator-(const Vector3& v1, const Vector3& v2) {
 	Vector3 temp(v1);
 	return temp -= v2;
 }
+

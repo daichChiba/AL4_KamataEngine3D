@@ -15,6 +15,9 @@ float Length(const Vector3& v);
 // 正規化
 Vector3 Normalize(const Vector3& v);
 
+//当たり判定
+Vector3 Sphere(Vector3 v1, Vector3 v2);
+
 // 　代入演算子オーバーロード
 // 　Vector3の足算
 Vector3& operator+=(Vector3& lhv, const Vector3& rhv);

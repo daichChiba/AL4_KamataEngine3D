@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include <cassert>
+#include"MathUtliltyForText.h"
 
 using namespace KamataEngine;
 
@@ -13,13 +14,11 @@ GameScene::~GameScene() {
 	// 自キャラの開放
 	delete player_;
 
-	//デバックカメラの開放
+	// デバックカメラの開放
 	delete debugCamera_;
 
-	//敵キャラの開放
+	// 敵キャラの開放
 	delete enemy_;
-
-
 }
 
 void GameScene::Initialize() {
@@ -42,12 +41,11 @@ void GameScene::Initialize() {
 	// 自キャラの初期化
 	player_->Initialize(model_, textureHandle_);
 
-
 	// 敵キャラの生成
 	Vector3 enemyPos = {5.0f, 5.0f, 100.0f};
 	enemy_ = new Enemy();
-	//　敵キャラの初期化
-	enemy_->Initialize(model_, enemyTextureHandle_,enemyPos);
+	// 　敵キャラの初期化
+	enemy_->Initialize(model_, enemyTextureHandle_, enemyPos);
 	enemy_->SetPlayer(player_);
 	debugCamera_ = new DebugCamera(640, 360);
 
@@ -55,7 +53,6 @@ void GameScene::Initialize() {
 	AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向表示が参照するカメラを指定する(アドレス渡し)
 	AxisIndicator::GetInstance()->SetTargetCamera(&camera_);
-
 }
 
 void GameScene::Update() {
@@ -63,8 +60,11 @@ void GameScene::Update() {
 	player_->Update();
 	// 敵キャラの更新
 	enemy_->Update();
-	//デバックカメラの更新
+	// デバックカメラの更新
 	debugCamera_->Update();
+
+	//当たり判定
+	CheckAllCollisions();
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_0)) {
 		isDebugCameraActive_ = !isDebugCameraActive_;
@@ -82,9 +82,7 @@ void GameScene::Update() {
 	} else {
 		// ビュープロジェクション行列の更新と転送
 		camera_.UpdateMatrix();
-
 	}
-
 }
 
 void GameScene::Draw() {
@@ -135,4 +133,79 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::CheckAllCollisions() {
+	// 判定対象AとBの座標
+	Vector3 posA, posB;
+
+	// 自弾リストの取得
+	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	// 敵弾リストの取得
+	const std::list<EnemyBullet*>& enemybullets = enemy_->GetBullets();
+
+	#pragma region 自キャラと敵弾の当たり判定
+	//自キャラの座標
+	posA = player_->GetWorldPosition();
+	//自キャラの敵弾すべての当たり判定
+	for (EnemyBullet* bullet : enemybullets) {
+		//敵の座標
+		posB = bullet->GetWorldPosition();
+		
+		Vector3 A2B = Sphere(posA, posB);
+		float len = Length(A2B);
+		float radius = bullet->GetRadius() + player_->GetRadius();
+
+		if (len <= sqrt(radius*radius)) {
+			//自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			//自弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+
+
+	#pragma endregion
+
+	#pragma region 自弾と敵キャラの当たり判定
+	// 自キャラの座標
+	posA = enemy_->GetWorldPosition();
+	// 自キャラの敵弾すべての当たり判定
+	for (PlayerBullet* bullet : playerBullets) {
+		// 敵の座標
+		posB = bullet->GetWorldPosition();
+
+		Vector3 A2B = Sphere(posA, posB);
+		float len = Length(A2B);
+		float radius = bullet->GetRadius() + enemy_->GetRadius();
+
+		if (len <= sqrt(radius * radius)) {
+			// 敵キャラの衝突時コールバックを呼び出す
+			enemy_->OnCollision();
+			// 自弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+	#pragma endregion
+
+	#pragma region 自弾と敵弾の当たり判定
+	for (PlayerBullet* bullet : playerBullets) {
+		for (EnemyBullet* bullet_ : enemybullets) {
+			//自弾の座標
+			posA = bullet->GetWorldPosition();
+			//敵弾の座標
+			posB = bullet_->GetWorldPosition();
+			Vector3 A2B = Sphere(posA, posB);
+			float len = Length(A2B);
+			float radius = bullet->GetRadius() + bullet_->GetRadius();
+
+			if (len <= sqrt(radius * radius)) {
+				// 自弾の衝突時コールバックを呼び出す
+				bullet->OnCollision();
+				// 敵弾の衝突時コールバックを呼び出す
+				bullet_->OnCollision();
+			}
+		}
+	}
+	#pragma endregion
 }
