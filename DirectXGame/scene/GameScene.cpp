@@ -39,7 +39,8 @@ void GameScene::Initialize() {
 
 	// 3Dモデルデータの生成
 	model_ = Model::Create();
-	// ビュープロジェクションの初期化
+	// カメラの初期化
+	camera_.farZ = 1500.0f;
 	camera_.Initialize();
 
 	// 自キャラの生成
@@ -56,10 +57,13 @@ void GameScene::Initialize() {
 	debugCamera_ = new DebugCamera(640, 360);
 
 	//天球モデルの生成
-	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+	modelSkydome_ = Model::CreateFromOBJ("SkyDome", true);
 
+	//天球の生成
+	skyDome_ = new SkyDome();
 	// 天球の初期化
 	skyDome_->Initialize(modelSkydome_);
+
 
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
