@@ -1,6 +1,6 @@
 #include "GameScene.h"
+#include "MathUtliltyForText.h"
 #include <cassert>
-#include"MathUtliltyForText.h"
 
 using namespace KamataEngine;
 
@@ -19,6 +19,12 @@ GameScene::~GameScene() {
 
 	// 敵キャラの開放
 	delete enemy_;
+
+	// 天球の開放
+	delete skyDome_;
+
+	// 天球モデルの開放
+	delete modelSkydome_;
 }
 
 void GameScene::Initialize() {
@@ -49,6 +55,12 @@ void GameScene::Initialize() {
 	enemy_->SetPlayer(player_);
 	debugCamera_ = new DebugCamera(640, 360);
 
+	//天球モデルの生成
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+
+	// 天球の初期化
+	skyDome_->Initialize(modelSkydome_);
+
 	// 軸方向表示の表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	// 軸方向表示が参照するカメラを指定する(アドレス渡し)
@@ -62,8 +74,10 @@ void GameScene::Update() {
 	enemy_->Update();
 	// デバックカメラの更新
 	debugCamera_->Update();
+	// 天球の更新
+	skyDome_->Update();
 
-	//当たり判定
+	// 当たり判定
 	CheckAllCollisions();
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_0)) {
@@ -116,6 +130,8 @@ void GameScene::Draw() {
 	player_->Draw(camera_);
 	// 敵キャラの描画
 	enemy_->Draw(camera_);
+	// 天球の描画
+	skyDome_->Draw(camera_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -144,30 +160,29 @@ void GameScene::CheckAllCollisions() {
 	// 敵弾リストの取得
 	const std::list<EnemyBullet*>& enemybullets = enemy_->GetBullets();
 
-	#pragma region 自キャラと敵弾の当たり判定
-	//自キャラの座標
+#pragma region 自キャラと敵弾の当たり判定
+	// 自キャラの座標
 	posA = player_->GetWorldPosition();
-	//自キャラの敵弾すべての当たり判定
+	// 自キャラの敵弾すべての当たり判定
 	for (EnemyBullet* bullet : enemybullets) {
-		//敵の座標
+		// 敵の座標
 		posB = bullet->GetWorldPosition();
-		
+
 		Vector3 A2B = Sphere(posA, posB);
 		float len = Length(A2B);
 		float radius = bullet->GetRadius() + player_->GetRadius();
 
-		if (len <= sqrt(radius*radius)) {
-			//自キャラの衝突時コールバックを呼び出す
+		if (len <= sqrt(radius * radius)) {
+			// 自キャラの衝突時コールバックを呼び出す
 			player_->OnCollision();
-			//自弾の衝突時コールバックを呼び出す
+			// 自弾の衝突時コールバックを呼び出す
 			bullet->OnCollision();
 		}
 	}
 
+#pragma endregion
 
-	#pragma endregion
-
-	#pragma region 自弾と敵キャラの当たり判定
+#pragma region 自弾と敵キャラの当たり判定
 	// 自キャラの座標
 	posA = enemy_->GetWorldPosition();
 	// 自キャラの敵弾すべての当たり判定
@@ -186,14 +201,14 @@ void GameScene::CheckAllCollisions() {
 			bullet->OnCollision();
 		}
 	}
-	#pragma endregion
+#pragma endregion
 
-	#pragma region 自弾と敵弾の当たり判定
+#pragma region 自弾と敵弾の当たり判定
 	for (PlayerBullet* bullet : playerBullets) {
 		for (EnemyBullet* bullet_ : enemybullets) {
-			//自弾の座標
+			// 自弾の座標
 			posA = bullet->GetWorldPosition();
-			//敵弾の座標
+			// 敵弾の座標
 			posB = bullet_->GetWorldPosition();
 			Vector3 A2B = Sphere(posA, posB);
 			float len = Length(A2B);
@@ -207,5 +222,5 @@ void GameScene::CheckAllCollisions() {
 			}
 		}
 	}
-	#pragma endregion
+#pragma endregion
 }

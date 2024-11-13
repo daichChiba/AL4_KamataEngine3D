@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <vector>
+#include "SkyDome.h"
 
 using namespace KamataEngine;
 
@@ -73,4 +74,11 @@ private: // メンバ変数
 
 	// 敵キャラ
 	Enemy* enemy_ = nullptr;
+
+	// 天球
+	SkyDome* skyDome_ = nullptr;
+
+	// 天球モデル
+	Model* modelSkydome_ = nullptr;
+
 };
