@@ -44,6 +44,30 @@ public: // メンバ関数
 	/// </summary>
 	void CheckAllCollisions();
 
+	/// <summary>
+	/// 敵弾を追加する
+	/// </summary>
+	/// <param name="enemyBullet">敵弾</param>
+	void AddEnemyBullet(EnemyBullet* enemyBullet);
+
+	/// <summary>
+	/// 敵弾の更新をする
+	/// </summary>
+	/// <param name="enemyBullet">敵弾</param>
+	void AddEnemyBulletUpdate();
+
+
+	/// <summary>
+	/// 敵弾を描画する
+	/// </summary>
+	/// <param name="enemyBullet">敵弾</param>
+	void AddEnemyBulletDraw();
+	/// <summary>
+	/// 敵弾を開放する
+	/// </summary>
+	/// <param name="enemyBullet"></param>
+	void AddEnemyBulletRelese();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -74,7 +98,7 @@ private: // メンバ変数
 	Player* player_ = nullptr;
 
 	// 敵キャラ
-	Enemy* enemy_ = nullptr;
+	std::list<Enemy*> enemies_;
 
 	// 天球
 	SkyDome* skyDome_ = nullptr;
@@ -85,4 +109,6 @@ private: // メンバ変数
 	// レールカメラ
 	RailCamera* railCamera_ = nullptr;
 
+	//敵の弾
+	std::list<EnemyBullet*> enemyBullets_;
 };

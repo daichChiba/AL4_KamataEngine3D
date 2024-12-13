@@ -5,6 +5,7 @@ using namespace KamataEngine;
 
 //自機クラスの前方宣言
 class Player;
+class GameScene;
 
 class Enemy {
 public:
@@ -69,6 +70,8 @@ public:
 	// 半径を取得
 	float GetRadius() { return radius_; }
 
+	void SetGameScene(GameScene* gameScene) { gameScene_ = gameScene; }
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -92,4 +95,6 @@ private:
 	//自キャラ
 	Player* player_ = nullptr;
 
+	//ゲームシーン
+	GameScene* gameScene_ = nullptr;
 };

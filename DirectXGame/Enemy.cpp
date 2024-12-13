@@ -2,14 +2,12 @@
 using namespace KamataEngine;
 #include "MathUtliltyForText.h"
 #include "Player.h"
-
+#include "GameScene.h"
 int const Enemy::kFireInterval;
 using namespace MathUtility;
 
 Enemy::~Enemy() {
-	for (EnemyBullet* bullet : bullets_) {
-		delete bullet;
-	}
+	gameScene_->AddEnemyBulletRelese();
 }
 
 void Enemy::Initialize(Model* model, uint32_t textureHandle, const Vector3& pos) {
@@ -56,19 +54,10 @@ void Enemy::Update() {
 
 
 
-	// 球更新
-	bullets_.remove_if([](EnemyBullet* bullet) {
-		if (bullet->IsDead()) {
-			delete bullet;
-			return true;
-		}
-		return false;
-	});
+
 
 	// 球更新
-	for (EnemyBullet* bullet : bullets_) {
-		bullet->Update();
-	}
+
 
 	// アフィン変換行列の作成
 	worldTransform_.matWorld_ = MathUtliltyForText::MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
@@ -82,9 +71,7 @@ void Enemy::Draw(Camera& camera) {
 	// 3Dモデルの描画
 	model_->Draw(worldTransform_, camera, textureHandle_);
 	// 弾描画
-	for (EnemyBullet* bullet : bullets_) {
-		bullet->Draw(camera);
-	}
+	gameScene_->AddEnemyBulletDraw();
 }
 
 void Enemy::Fire() {
@@ -112,7 +99,7 @@ void Enemy::Fire() {
 
 	//bullet_ = newBullet;
 	// 弾を登録する
-	bullets_.push_back(newBullet);
+	gameScene_->AddEnemyBullet(newBullet);
 }
 
 void Enemy::ApproachInitialize() {
