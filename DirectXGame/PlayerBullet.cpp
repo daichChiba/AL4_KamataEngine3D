@@ -1,6 +1,8 @@
 #include "PlayerBullet.h"
 #include "MathUtliltyForText.h"
 
+using namespace MathUtility;
+
 int32_t const PlayerBullet::kLifeTime;
 void PlayerBullet::Initialize(Model* model, const Vector3& pos, const Vector3& velocity) {
 	// NULLポインタチェック

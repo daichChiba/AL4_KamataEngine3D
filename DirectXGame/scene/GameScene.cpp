@@ -25,6 +25,9 @@ GameScene::~GameScene() {
 
 	// 天球モデルの開放
 	delete modelSkydome_;
+
+	// レールカメラ
+	delete railCamera_;
 }
 
 void GameScene::Initialize() {
@@ -40,13 +43,22 @@ void GameScene::Initialize() {
 	// 3Dモデルデータの生成
 	model_ = Model::Create();
 	// カメラの初期化
-	camera_.farZ = 1500.0f;
+	//camera_.farZ = 1000.0f;
 	camera_.Initialize();
 
+
+	Vector3 playerPos(0, 0, 10.0f);
 	// 自キャラの生成
 	player_ = new Player();
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_);
+	player_->Initialize(model_, textureHandle_, playerPos);
+	railCamera_ = new RailCamera();
+	// レールカメラの生成
+	railCamera_->Initialize(camera_.translation_, camera_.rotation_);
+
+	//自キャラとレールカメラの親子関係を結ぶ
+	player_->SetParent(&railCamera_->GetWorldTransform());
+
 
 	// 敵キャラの生成
 	Vector3 enemyPos = {5.0f, 5.0f, 100.0f};
@@ -98,8 +110,14 @@ void GameScene::Update() {
 		// ビュープロジェクション行列のと転送
 		camera_.TransferMatrix();
 	} else {
-		// ビュープロジェクション行列の更新と転送
-		camera_.UpdateMatrix();
+		railCamera_->Update();
+		// デバックカメラのビュー行列
+		camera_.matView = railCamera_->GetCamera().matView;
+		// デバックカメラのプロジェクション行列
+		camera_.matProjection = railCamera_->GetCamera().matProjection;
+		// ビュープロジェクション行列のと転送
+		camera_.TransferMatrix();
+
 	}
 }
 
@@ -172,8 +190,8 @@ void GameScene::CheckAllCollisions() {
 		// 敵の座標
 		posB = bullet->GetWorldPosition();
 
-		Vector3 A2B = Sphere(posA, posB);
-		float len = Length(A2B);
+		Vector3 A2B = MathUtliltyForText::Sphere(posA, posB);
+		float len = MathUtliltyForText::Length(A2B);
 		float radius = bullet->GetRadius() + player_->GetRadius();
 
 		if (len <= sqrt(radius * radius)) {
@@ -194,8 +212,8 @@ void GameScene::CheckAllCollisions() {
 		// 敵の座標
 		posB = bullet->GetWorldPosition();
 
-		Vector3 A2B = Sphere(posA, posB);
-		float len = Length(A2B);
+		Vector3 A2B = MathUtliltyForText::Sphere(posA, posB);
+		float len = MathUtliltyForText::Length(A2B);
 		float radius = bullet->GetRadius() + enemy_->GetRadius();
 
 		if (len <= sqrt(radius * radius)) {
@@ -214,8 +232,8 @@ void GameScene::CheckAllCollisions() {
 			posA = bullet->GetWorldPosition();
 			// 敵弾の座標
 			posB = bullet_->GetWorldPosition();
-			Vector3 A2B = Sphere(posA, posB);
-			float len = Length(A2B);
+			Vector3 A2B = MathUtliltyForText::Sphere(posA, posB);
+			float len = MathUtliltyForText::Length(A2B);
 			float radius = bullet->GetRadius() + bullet_->GetRadius();
 
 			if (len <= sqrt(radius * radius)) {

@@ -2,24 +2,36 @@
 #include"KamataEngine.h"
 using namespace KamataEngine;
 /// <summary>
-/// ƒŒ[ƒ‹ƒJƒƒ‰
+/// ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©
 /// </summary>
 class RailCamera {
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	void Initialize(Vector3& pos, Vector3& rotate, Camera& camera);
+	void Initialize(Vector3& pos, Vector3& rotate);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
+	/// </summary>
+	/// <returns></returns>
+	const WorldTransform& GetWorldTransform() const { return worldTransform_; }
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	const Camera& GetCamera() { return camera_; }
+
 private:
-	// ƒ[ƒ‹ƒh•ÏŠ·ƒf[ƒ^
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ãƒ‡ãƒ¼ã‚¿
 	WorldTransform worldTransform_;
-	// ƒJƒƒ‰
-	Camera* camera_;
+	// ã‚«ãƒ¡ãƒ©
+	Camera camera_;
 
 };

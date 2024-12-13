@@ -4,6 +4,7 @@ using namespace KamataEngine;
 #include "Player.h"
 
 int const Enemy::kFireInterval;
+using namespace MathUtility;
 
 Enemy::~Enemy() {
 	for (EnemyBullet* bullet : bullets_) {
@@ -28,12 +29,16 @@ void Enemy::Initialize(Model* model, uint32_t textureHandle, const Vector3& pos)
 
 void Enemy::Update() {
 
+	#ifdef DEBUG
 	//// キャラクターの座標を画面表示する処理
-	//ImGui::Begin("Debug2");
+	// ImGui::Begin("Debug2");
 	//// ImGui::DragFloat3("player", &worldTransform_.translation_.x, 0.01f);
-	//ImGui::InputFloat3("Inputfloat", &worldTransform_.translation_.x);
-	//ImGui::SliderFloat3("SliderFloat", &worldTransform_.translation_.x, -10.0f, 10.0f);
-	//ImGui::End();
+	// ImGui::InputFloat3("Inputfloat", &worldTransform_.translation_.x);
+	// ImGui::SliderFloat3("SliderFloat", &worldTransform_.translation_.x, -10.0f, 10.0f);
+	// ImGui::End();
+
+
+	#endif // DEBUG
 
 
 
@@ -66,7 +71,7 @@ void Enemy::Update() {
 	}
 
 	// アフィン変換行列の作成
-	worldTransform_.matWorld_ = MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
+	worldTransform_.matWorld_ = MathUtliltyForText::MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
 
 
 	// ワールド行列を更新させる
@@ -94,12 +99,12 @@ void Enemy::Fire() {
 	//敵キャラから自キャラへの差分ベクトルを作成する
 	Vector3 enemy2player = playerPos - enemyPos;
 	//ベクトルの正規化
-	Normalize(enemy2player);
+	MathUtliltyForText::Normalize(enemy2player);
 	//ベクトルの長さを早さに合わせる
 	velocity = enemy2player * kBulletSpeed;
 
 	// 速度ベクトルを敵の向きに合わせて回転させる
-	velocity = Transform(velocity, worldTransform_.matWorld_);
+	velocity = MathUtliltyForText::Transform(velocity, worldTransform_.matWorld_);
 
 	// 弾を生成し、初期化
 	EnemyBullet* newBullet = new EnemyBullet();
@@ -136,7 +141,7 @@ void Enemy::ApproachUpdate() {
 		FireTimer = kFireInterval;
 	}
 
-	if (worldTransform_.translation_.z < 0.0f) {
+	if (worldTransform_.translation_.z < 10.0f) {
 		phase_ = Phase::Leave;
 	}
 }

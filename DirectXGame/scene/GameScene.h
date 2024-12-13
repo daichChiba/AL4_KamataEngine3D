@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include <vector>
 #include "SkyDome.h"
+#include "RailCamera.h"
 
 using namespace KamataEngine;
 
@@ -80,5 +81,8 @@ private: // メンバ変数
 
 	// 天球モデル
 	Model* modelSkydome_ = nullptr;
+
+	// レールカメラ
+	RailCamera* railCamera_ = nullptr;
 
 };

@@ -3,22 +3,31 @@
 using namespace KamataEngine;
 using namespace MathUtility;
 
-void RailCamera::Initialize(Vector3& pos, Vector3& rotate, Camera& camera) {
-	// ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ì‰ŠúÝ’è
+
+void RailCamera::Initialize(Vector3& pos, Vector3& rotate) {
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®åˆæœŸè¨­å®š
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = pos;
 	worldTransform_.rotation_ = rotate;
 
-	// ƒJƒƒ‰‚Ì‰Šú‰»
-	camera_ = &camera;
+	camera_.farZ = 1000.0f;
+	camera_.Initialize();
 }
 
 void RailCamera::Update() {
 
-	// ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ÌÀ•W‚Ì”’l‚ð‰ÁŽZ‚µ‚½‚è‚·‚é(ˆÚ“®)
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®åº§æ¨™ã®æ•°å€¤ã‚’åŠ ç®—ã—ãŸã‚Šã™ã‚‹(ç§»å‹•)
+	worldTransform_.translation_ += Vector3(0, 0, 0.1f);
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®åº§æ¨™ã®æ•°å€¤ã‚’åŠ ç®—ã—ãŸã‚Šã™ã‚‹(ç§»å‹•)
+	worldTransform_.matWorld_ = MathUtliltyForText::MakeAffineMatrix(worldTransform_.scale_, worldTransform_.rotation_, worldTransform_.translation_);
+	// ã‚«ãƒ¡ãƒ©ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‹ã‚‰ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’è¨ˆç®—ã™ã‚‹
+	camera_.matView = Inverse(worldTransform_.matWorld_);
+	
+	#ifdef DEBUG
+	ImGui::Begin("camera");
+	ImGui::SliderFloat3("camera.translation_", &worldTransform_.translation_.x, -10.0f, 10.0f);
+	ImGui::SliderFloat3("camera.rotation_", &worldTransform_.rotation_.x, -10.0f, 10.0f);
+	ImGui::End();
+	#endif // DEBUG
 
-	// ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ÌÀ•W‚Ì”’l‚ð‰ÁŽZ‚µ‚½‚è‚·‚é(ˆÚ“®)
-
-	// ƒJƒƒ‰ƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒ‹ƒhs—ñ‚©‚çƒrƒ…[s—ñ‚ðŒvŽZ‚·‚é
-	camera_->matView = Inverse(worldTransform_.matWorld_);
 }

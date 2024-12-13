@@ -1,5 +1,6 @@
 #include "MathUtliltyForText.h"
 
+namespace MathUtliltyForText {
 Matrix4x4 Multply(const Matrix4x4& m1, const Matrix4x4& m2) {
 	Matrix4x4 ret = {};
 	for (int i = 0; i < 4; i++) {
@@ -55,7 +56,6 @@ Matrix4x4 MakeRotateZMatrix(float radian) {
 	return ret;
 }
 
-
 // 3次元アフィン変換行列
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 	Matrix4x4 rotateXMatrix = MakeRotateXMatrix(rotate.x);
@@ -82,7 +82,7 @@ Vector3 Normalize(const Vector3& v) {
 	return {v.x / length, v.y / length, v.z / length};
 }
 
-//当たり判定
+// 当たり判定
 Vector3 Sphere(Vector3 v1, Vector3 v2) {
 	Vector3 result;
 	result.x = (v2.x - v1.x) * (v2.x - v1.x);
@@ -118,14 +118,14 @@ const Vector3 operator*(const Vector3& v, float s) {
 
 Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
 	Vector3 result;
-	result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0]/* + matrix.m[3][0]*/;
-	result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + vector.z * matrix.m[2][1]/* + matrix.m[3][1]*/;
-	result.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2]/* + matrix.m[3][2]*/;
-	//float w = vector.x * matrix.m[0][3] + vector.y * matrix.m[1][3] + vector.z * matrix.m[2][3] + matrix.m[3][3];
-	//assert(w != 0.0f);
-	//result.x /= w;
-	//result.y /= w;
-	//result.z /= w;
+	result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0] /* + matrix.m[3][0]*/;
+	result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + vector.z * matrix.m[2][1] /* + matrix.m[3][1]*/;
+	result.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2] /* + matrix.m[3][2]*/;
+	// float w = vector.x * matrix.m[0][3] + vector.y * matrix.m[1][3] + vector.z * matrix.m[2][3] + matrix.m[3][3];
+	// assert(w != 0.0f);
+	// result.x /= w;
+	// result.y /= w;
+	// result.z /= w;
 	return result;
 }
 
@@ -140,4 +140,4 @@ const Vector3 operator-(const Vector3& v1, const Vector3& v2) {
 	Vector3 temp(v1);
 	return temp -= v2;
 }
-
+} // namespace MathUtliltyForText

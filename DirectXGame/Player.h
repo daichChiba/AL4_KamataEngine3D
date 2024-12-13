@@ -15,7 +15,7 @@ public:
 	/// </summary>
 	/// <param name="model>モデル</param>
 	/// <param name="textureHandle>テクスチャハンドル</param>
-	void Initialize(Model* model, uint32_t textureHandle);
+	void Initialize(Model* model, uint32_t textureHandle, Vector3& pos);
 
 	/// <summary>
 	/// 更新
@@ -43,6 +43,9 @@ public:
 	/// </summary>
 	Vector3 GetWorldPosition();
 
+	Vector3 GetWorldRotate();
+
+
 	// 衝突を検知したら呼び出されるコールバック関数
 	void OnCollision();
 
@@ -51,6 +54,10 @@ public:
 
 	//半径を取得
 	float GetRadius() { return radius_; }
+
+
+	//setter
+	void SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
 
 private:
 	// ワールド変換データ
@@ -64,7 +71,7 @@ private:
 	Input* input_ = nullptr;
 
 	// 半径
-	float radius_ = 12.0f;
+	float radius_ = 6.0f;
 
 
 	// 弾
