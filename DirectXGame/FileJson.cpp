@@ -1,4 +1,5 @@
 #include "FileJson.h"
+#include <nlohmann/json.hpp>
  // nlohmann::jsonライブラリのヘッダファイルをインクルード
 using json = nlohmann::json;
 using namespace std;
@@ -47,4 +48,50 @@ bool FileJson::Read_Save(const char* filename_, const char* DesiredClass, const 
 	}
 
 	return false;
+}
+/// <summary>
+/// jsonファイル読み込み
+/// </summary>
+/// <param name="filename_">ファイル名</param>
+/// <param name="DesiredClass">読み込みたい変数群("firstStage"など)</param>
+/// <param name="variablename">変数名("isClear"など)</param>
+/// <param name="classVariable">読み込みたい変数群と変数名("first stage isClear:"など)</param>
+/// <param name="readVector">読み込むベクトル</param>
+/// <returns></returns>
+Vector3 FileJson::Read_Save(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, Vector3 readVector) {
+	try {
+		// ファイルを開く
+		std::ifstream file(filename_);
+		if (!file.is_open()) {
+			std::cerr << "Error: Cannot open file " << filename_ << std::endl;
+			return readVector;
+		}
+
+		// JSONをパース
+		nlohmann::json jsonData;
+		file >> jsonData;
+
+		// 指定されたクラスを検索
+		if (jsonData.contains(DesiredClass)) {
+			auto& classData = jsonData[DesiredClass];
+
+			// クラス内の変数を検索
+			if (classData.contains(classVariable)) {
+				auto& variableData = classData[classVariable];
+
+				// 変数名を確認し、Vector3データを取得
+				if (variableData.contains(variablename)) {
+					auto vectorData = variableData[variablename];
+					if (vectorData.contains("x") && vectorData.contains("y") && vectorData.contains("z")) {
+						return Vector3(vectorData["x"].get<float>(), vectorData["y"].get<float>(), vectorData["z"].get<float>());
+					}
+				}
+			}
+		}
+	} catch (const std::exception& e) {
+		std::cerr << "Error: Exception while reading JSON: " << e.what() << std::endl;
+	}
+
+	// エラー時はデフォルト値を返す
+	return readVector;
 }
