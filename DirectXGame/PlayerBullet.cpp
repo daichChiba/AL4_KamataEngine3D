@@ -1,5 +1,6 @@
 #include "PlayerBullet.h"
 #include "MathUtliltyForText.h"
+#include <assert.h>
 
 using namespace MathUtility;
 

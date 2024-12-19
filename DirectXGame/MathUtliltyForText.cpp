@@ -1,4 +1,5 @@
 #include "MathUtliltyForText.h"
+#include <assert.h>
 
 namespace MathUtliltyForText {
 Matrix4x4 Multply(const Matrix4x4& m1, const Matrix4x4& m2) {
@@ -88,7 +89,7 @@ Vector3 Sphere(Vector3 v1, Vector3 v2) {
 	result.x = (v2.x - v1.x) * (v2.x - v1.x);
 	result.y = (v2.y - v1.y) * (v2.y - v1.y);
 	result.z = (v2.z - v1.z) * (v2.z - v1.z);
-	return {result.x + result.y + result.z};
+	return {result.x , result.y , result.z};
 }
 
 // Vector3の足算

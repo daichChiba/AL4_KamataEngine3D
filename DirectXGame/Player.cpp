@@ -3,6 +3,7 @@
 #include "Player.h"
 using namespace KamataEngine;
 #include "MathUtliltyForText.h"
+#include <assert.h>
 
 Player::~Player() {
 	for (PlayerBullet* bullet : bullets_) {

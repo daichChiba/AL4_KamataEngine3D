@@ -2,6 +2,7 @@
 using namespace KamataEngine;
 #include "MathUtliltyForText.h"
 #include "Player.h"
+#include<assert.h>
 
 int const Enemy::kFireInterval;
 using namespace MathUtility;

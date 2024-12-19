@@ -1,7 +1,7 @@
 #include <KamataEngine.h>
 
 using namespace KamataEngine;
-#include"GameScene.h"
+#include"../DirectXGame/scene/GameScene.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
