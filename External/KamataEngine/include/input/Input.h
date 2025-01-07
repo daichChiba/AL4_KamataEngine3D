@@ -73,6 +73,13 @@ public: // メンバ関数
 	bool TriggerKey(BYTE keyNumber) const;
 
 	/// <summary>
+	/// キーの押下をチェック
+	/// </summary>
+	/// <param name="keyNumber">キー番号( DIK_0 等)</param>
+	/// <returns>一度押されたか</returns>
+	bool ReleseKey(BYTE keyNumber) const;
+
+	/// <summary>
 	/// 全キー情報取得
 	/// </summary>
 	/// <param name="keyStateBuf">全キー情報</param>

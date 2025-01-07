@@ -40,6 +40,14 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
+	// サウンドデータの読み込み
+	soundDataHandle_ = audio_->LoadWave("gameScene.wav");
+	// 音声再生
+	audio_->PauseWave(soundDataHandle_);
+	// 第2引数でループ再生を指定
+	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+
+
 	// 3Dモデルデータの生成
 	model_ = Model::Create();
 	// カメラの初期化
@@ -95,6 +103,29 @@ void GameScene::Update() {
 
 	// 当たり判定
 	CheckAllCollisions();
+
+	if (enemy_->GetHp() < 0) {
+		isClear = true;
+		finished_ = true;
+		// 音声停止
+		audio_->StopWave(voiceHandle_);
+	} else {
+		isClear = false;
+	}
+
+	if (enemy_->GetIsLeave()==true) {
+		finished_ = true;
+		// 音声停止
+		audio_->StopWave(voiceHandle_);
+	}
+
+	if (player_->GetHp()<0) {
+		finished_ = true;
+		// 音声停止
+		audio_->StopWave(voiceHandle_);
+
+	}
+
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_0)) {
 		isDebugCameraActive_ = !isDebugCameraActive_;

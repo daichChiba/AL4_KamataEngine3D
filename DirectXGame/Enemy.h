@@ -69,6 +69,10 @@ public:
 	// 半径を取得
 	float GetRadius() { return radius_; }
 
+	int GetHp() { return hp_; }
+
+	bool GetIsLeave() { return isLeave_; }
+
 private:
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -92,4 +96,7 @@ private:
 	//自キャラ
 	Player* player_ = nullptr;
 
+	int hp_ = 1;
+
+	bool isLeave_ = false;
 };

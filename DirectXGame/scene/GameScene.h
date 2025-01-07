@@ -44,6 +44,9 @@ public: // メンバ関数
 	/// </summary>
 	void CheckAllCollisions();
 
+	bool IsFinished() const { return finished_; }
+	bool IsClear() const { return isClear; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -85,4 +88,12 @@ private: // メンバ変数
 	// レールカメラ
 	RailCamera* railCamera_ = nullptr;
 
+	// 終了フラグ
+	bool finished_ = false;
+
+	bool isClear = false;
+	// サウンドデータハンドル
+	uint32_t soundDataHandle_ = 0;
+	// 音声再生ハンドル
+	uint32_t voiceHandle_ = 0;
 };

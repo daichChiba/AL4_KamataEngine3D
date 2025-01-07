@@ -55,6 +55,7 @@ public:
 	//半径を取得
 	float GetRadius() { return radius_; }
 
+	int GetHp() { return hp_; }
 
 	//setter
 	void SetParent(const WorldTransform* parent) { worldTransform_.parent_ = parent; }
@@ -76,4 +77,6 @@ private:
 
 	// 弾
 	std::list<PlayerBullet*> bullets_;
+
+	int hp_ = 1;
 };

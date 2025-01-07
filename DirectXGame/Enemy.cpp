@@ -157,6 +157,10 @@ void Enemy::LeaveUpdate() {
 	move.x -= kLeaveSpeed;
 	move.y += kLeaveSpeed;
 
+	if (worldTransform_.translation_.x<=0) {
+		isLeave_ = true;
+	}
+
 	// 移動(ベクトルの加算)
 	worldTransform_.translation_ += move;
 }
@@ -173,4 +177,5 @@ Vector3 Enemy::GetWorldPosition() {
 }
 
 void Enemy::OnCollision() {
+	hp_--;
 }

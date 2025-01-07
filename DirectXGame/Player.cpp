@@ -158,4 +158,6 @@ Vector3 Player::GetWorldRotate() {
 	return worldRotate;
 }
 
-void Player::OnCollision() {}
+void Player::OnCollision() {
+	hp_--;
+}
