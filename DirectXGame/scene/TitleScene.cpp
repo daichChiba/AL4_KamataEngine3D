@@ -7,6 +7,7 @@ TitleScene::~TitleScene() {
 	delete sprite;
 }
 
+
 void TitleScene::Initialize() {
 	textureHandle_ = TextureManager::Load("title.png");
 	sprite = Sprite::Create(textureHandle_, {0, 0});
