@@ -44,7 +44,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow(L"LE2D_12_チバ_ダイチ_AL4");
+	win->CreateGameWindow(L"空中戦");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
