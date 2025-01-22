@@ -1,6 +1,6 @@
 #include "FileJson.h"
 #include <nlohmann/json.hpp>
- // nlohmann::jsonライブラリのヘッダファイルをインクルード
+// nlohmann::jsonライブラリのヘッダファイルをインクルード
 using json = nlohmann::json;
 using namespace std;
 /// <summary>
@@ -11,7 +11,7 @@ using namespace std;
 /// <param name="variablename">変数名("isClear"など)</param>
 /// <param name="classVariable">読み込みたい変数群と変数名("first stage isClear:"など)</param>
 /// <returns></returns>
-bool FileJson::Read_Save(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable) {
+bool FileJson::Read_BoolSave(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable) {
 	string fileName = filename_;
 
 	ifstream reading_file(fileName);
@@ -58,7 +58,7 @@ bool FileJson::Read_Save(const char* filename_, const char* DesiredClass, const 
 /// <param name="classVariable">読み込みたい変数群と変数名("first stage isClear:"など)</param>
 /// <param name="readVector">読み込むベクトル</param>
 /// <returns></returns>
-Vector3 FileJson::Read_Save(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, Vector3 readVector) {
+Vector3 FileJson::Read_Vector3Save(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, Vector3 readVector) {
 	try {
 		// ファイルを開く
 		std::ifstream file(filename_);
@@ -97,6 +97,49 @@ Vector3 FileJson::Read_Save(const char* filename_, const char* DesiredClass, con
 }
 
 /// <summary>
+/// jsonIntファイル読み込み
+/// </summary>
+/// <param name="filename_">ファイル名</param>
+/// <param name="DesiredClass">読み込みたい変数群("firstStage"など)</param>
+/// <param name="variablename">変数名("isClear"など)</param>
+/// <param name="classVariable">読み込みたい変数群と変数名("first stage isClear:"など)</param>
+/// <param name="readInt">読み込むint型の値</param>
+/// <returns></returns>
+int FileJson::Read_IntSave(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, int readInt) {
+	// JSONオブジェクトの作成
+	json m_json;
+
+	// ファイルが存在する場合は既存のデータを読み込む
+	ifstream input_file(filename_);
+	if (input_file.is_open()) {
+		try {
+			input_file >> m_json;
+		} catch (nlohmann::json::parse_error& e) {
+			cerr << "JSON parse error: " << e.what() << endl;
+			input_file.close();
+			return 0; // デフォルト値を返す
+		}
+		input_file.close();
+	}
+
+	// 指定されたクラスと変数名にintデータを保存
+	m_json[DesiredClass][classVariable][variablename] = readInt;
+
+	// JSONデータをファイルに書き込む
+	ofstream writing_file(filename_, ios::out);
+	if (!writing_file.is_open()) {
+		cerr << "Cannot open file: " << filename_ << endl;
+		return 0; // デフォルト値を返す
+	}
+
+	writing_file << m_json.dump(4) << endl; // 4スペースのインデントで整形
+	writing_file.close();
+
+	// 保存したintデータを返す
+	return readInt;
+}
+
+/// <summary>
 /// jsonBoolファイル書き込み
 /// </summary>
 /// <param name="filename_">ファイル名</param>
@@ -104,7 +147,7 @@ Vector3 FileJson::Read_Save(const char* filename_, const char* DesiredClass, con
 /// <param name="variablename">変数名("isClear"など)</param>
 /// <param name="classVariable">読み込みたい変数群と変数名("first stage isClear:"など)</param>
 /// <returns></returns>
-bool FileJson::White_Save(const char* filename_, const char* DesiredClass, const char* variablename, const int classVariable) {
+bool FileJson::White_BoolSave(const char* filename_, const char* DesiredClass, const char* variablename, const int classVariable) {
 	// JSONオブジェクトの作成
 	json m_json;
 
@@ -134,4 +177,86 @@ bool FileJson::White_Save(const char* filename_, const char* DesiredClass, const
 	writing_file.close();
 
 	return false;
+}
+/// <summary>
+/// jsonVector3ファイル書き込み
+/// </summary>
+/// <param name="filename_">ファイル名</param>
+/// <param name="DesiredClass">書き込みたい変数群("firstStage"など)</param>
+/// <param name="variablename">変数名("isClear"など)</param>
+/// <param name="whiteVector">書き込むVector3</param>
+/// <returns></returns>
+Vector3 FileJson::White_Vector3Save(const char* filename_, const char* DesiredClass, const char* variablename, Vector3 whiteVector) {
+	// JSONオブジェクトの作成
+	json m_json;
+
+	// ファイルが存在する場合は既存のデータを読み込む
+	ifstream input_file(filename_);
+	if (input_file.is_open()) {
+		try {
+			input_file >> m_json;
+		} catch (nlohmann::json::parse_error& e) {
+			cerr << "JSON parse error: " << e.what() << endl;
+			input_file.close();
+			return Vector3(); // デフォルト値を返す
+		}
+		input_file.close();
+	}
+
+	// 指定されたクラスと変数名にVector3データを保存
+	m_json[DesiredClass][variablename] = {whiteVector.x, whiteVector.y, whiteVector.z};
+
+	// JSONデータをファイルに書き込む
+	ofstream writing_file(filename_, ios::out);
+	if (!writing_file.is_open()) {
+		cerr << "Cannot open file: " << filename_ << endl;
+		return Vector3(); // デフォルト値を返す
+	}
+
+	writing_file << m_json.dump(4) << endl; // 4スペースのインデントで整形
+	writing_file.close();
+
+	// 保存したVector3データを返す
+	return whiteVector;
+}
+
+/// <summary>
+/// jsonIntファイル書き込み
+/// </summary>
+/// <param name="filename_">ファイル名</param>
+/// <param name="DesiredClass">書き込みたい変数群("firstStage"など)</param>
+/// <param name="variablename">変数名("isClear"など)</param>
+/// <param name="whiteInt">読み込むint型の値</param>
+/// <returns></returns>
+int FileJson::White_IntSave(const char* filename_, const char* DesiredClass, const char* variablename, int whiteInt) {
+	// JSONオブジェクトの作成
+	json m_json;
+
+	// ファイルが存在する場合は既存のデータを読み込む
+	ifstream input_file(filename_);
+	if (input_file.is_open()) {
+		try {
+			input_file >> m_json;
+		} catch (nlohmann::json::parse_error& e) {
+			cerr << "JSON parse error: " << e.what() << endl;
+			input_file.close();
+			return int(); // デフォルト値を返す
+		}
+		input_file.close();
+	}
+
+	// 指定されたクラスと変数名にVector3データを保存
+	m_json[DesiredClass][variablename] = {whiteInt};
+
+	// JSONデータをファイルに書き込む
+	ofstream writing_file(filename_, ios::out);
+	if (!writing_file.is_open()) {
+		cerr << "Cannot open file: " << filename_ << endl;
+		return int(); // デフォルト値を返す
+	}
+
+	writing_file << m_json.dump(4) << endl; // 4スペースのインデントで整形
+	writing_file.close();
+
+	return whiteInt;
 }
