@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "FileJson.h"
 #include "MathUtliltyForText.h"
 #include <cassert>
 
@@ -62,15 +63,8 @@ void GameScene::Initialize() {
 	// 自キャラとレールカメラの親子関係を結ぶ
 	player_->SetParent(&railCamera_->GetWorldTransform());
 
-	for (int32_t i = 0; i < 3; ++i) {
-		Enemy* newEnemy = new Enemy();
-		Vector3 enemyPosition = {10 + i * 4.0f, 1, 100};
-		newEnemy->Initialize(model_, enemyTextureHandle_, enemyPosition);
-		newEnemy->SetPlayer(player_);
-		newEnemy->SetGameScene(this);
+	LoadEnemyPopData();
 
-		enemies_.push_back(newEnemy);
-	}
 	// 　敵キャラの初期化
 	debugCamera_ = new DebugCamera(640, 360);
 
@@ -293,3 +287,18 @@ void GameScene::AddEnemyBulletRelese() {
 		delete bullet;
 	}
 }
+
+void GameScene::LoadEnemyPopData() {
+	// for (int32_t i = 0; i < 3; ++i) {
+	Enemy* newEnemy = new Enemy();
+	Vector3 enemyPosition{};
+	enemyPosition = FileJson::Read_Vector3Save("Resources/SaveData/Enemy.json", "enemy", "enemy_1", "pos", enemyPosition);
+	newEnemy->Initialize(model_, enemyTextureHandle_, enemyPosition);
+	newEnemy->SetPlayer(player_);
+	newEnemy->SetGameScene(this);
+
+	enemies_.push_back(newEnemy);
+	//}
+}
+
+void GameScene::UpdateEnemyPopCommand() {}

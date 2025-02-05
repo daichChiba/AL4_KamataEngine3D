@@ -4,66 +4,65 @@
 #include "nlohmann/json.hpp"
 #include<KamataEngine.h>
 using namespace KamataEngine;
-class FileJson {
-public:
+namespace FileJson {
 	/// <summary>
-	/// jsonBoolƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	/// jsonBoolãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="DesiredClass">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-	/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-	/// <param name="classVariable">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ‚Æ•Ï”–¼("first stage isClear:"‚È‚Ç)</param>
+	/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="DesiredClass">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+	/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+	/// <param name="classVariable">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤ã¨å¤‰æ•°å("first stage isClear:"ãªã©)</param>
 	/// <returns></returns>
 	static bool Read_BoolSave(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable);
 	/// <summary>
-	/// jsonVector3ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	/// jsonVector3ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="DesiredClass">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-	/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-	/// <param name="classVariable">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ‚Æ•Ï”–¼("first stage isClear:"‚È‚Ç)</param>
-	/// <param name="readVector">“Ç‚İ‚ŞƒxƒNƒgƒ‹</param>
+	/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="DesiredClass">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+	/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+	/// <param name="classVariable">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤ã¨å¤‰æ•°å("first stage isClear:"ãªã©)</param>
+	/// <param name="readVector">èª­ã¿è¾¼ã‚€ãƒ™ã‚¯ãƒˆãƒ«</param>
 	/// <returns></returns>
 	Vector3 Read_Vector3Save(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, Vector3 readVector);
 
 	/// <summary>
-	/// jsonIntƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	/// jsonIntãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="DesiredClass">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-	/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-	/// <param name="classVariable">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ‚Æ•Ï”–¼("first stage isClear:"‚È‚Ç)</param>
-	/// <param name="readInt">“Ç‚İ‚ŞintŒ^‚Ì’l</param>
+	/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="DesiredClass">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+	/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+	/// <param name="classVariable">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤ã¨å¤‰æ•°å("first stage isClear:"ãªã©)</param>
+	/// <param name="readInt">èª­ã¿è¾¼ã‚€intå‹ã®å€¤</param>
 	/// <returns></returns>
 	static int Read_IntSave(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, int readInt);
 
 	/// <summary>
-	/// jsonBoolƒtƒ@ƒCƒ‹‘‚«‚İ
+	/// jsonBoolãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 	/// </summary>
-	/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="DesiredClass">‘‚«‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-	/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-	/// <param name="classVariable">‘‚«‚İ‚½‚¢•Ï”ŒQ‚Æ•Ï”–¼("first stage isClear:"‚È‚Ç)</param>
+	/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="DesiredClass">æ›¸ãè¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+	/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+	/// <param name="classVariable">æ›¸ãè¾¼ã¿ãŸã„å¤‰æ•°ç¾¤ã¨å¤‰æ•°å("first stage isClear:"ãªã©)</param>
 	/// <returns></returns>
 	static bool White_BoolSave(const char* filename_, const char* DesiredClass, const char* variablename, const int classVariable);
 
 	/// <summary>
-	/// jsonVector3ƒtƒ@ƒCƒ‹‘‚«‚İ
+	/// jsonVector3ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 	/// </summary>
-	/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="DesiredClass">‘‚«‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-	/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-	/// <param name="whiteVector">‘‚«‚ŞVector3</param>
+	/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="DesiredClass">æ›¸ãè¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+	/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+	/// <param name="whiteVector">æ›¸ãè¾¼ã‚€Vector3</param>
 	/// <returns></returns>
 	Vector3 White_Vector3Save(const char* filename_, const char* DesiredClass, const char* variablename, Vector3 whiteVector);
 
 	/// <summary>
-	/// jsonIntƒtƒ@ƒCƒ‹‘‚«‚İ
+	/// jsonIntãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 	/// </summary>
-	/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="DesiredClass">‘‚«‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-	/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-	/// <param name="whiteInt">“Ç‚İ‚ŞintŒ^‚Ì’l</param>
+	/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="DesiredClass">æ›¸ãè¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+	/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+	/// <param name="whiteInt">èª­ã¿è¾¼ã‚€intå‹ã®å€¤</param>
 	/// <returns></returns>
 	static int White_IntSave(const char* filename_, const char* DesiredClass, const char* variablename, int whiteInt);
 

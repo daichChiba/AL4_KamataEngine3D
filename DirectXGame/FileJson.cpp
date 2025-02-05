@@ -1,15 +1,16 @@
 #include "FileJson.h"
 #include <nlohmann/json.hpp>
-// nlohmann::jsonƒ‰ƒCƒuƒ‰ƒŠ‚Ìƒwƒbƒ_ƒtƒ@ƒCƒ‹‚ğƒCƒ“ƒNƒ‹[ƒh
+// nlohmann::jsonãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 using json = nlohmann::json;
 using namespace std;
+
 /// <summary>
-/// jsonƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+/// jsonãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 /// </summary>
-/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-/// <param name="DesiredClass">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-/// <param name="classVariable">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ‚Æ•Ï”–¼("first stage isClear:"‚È‚Ç)</param>
+/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+/// <param name="DesiredClass">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+/// <param name="classVariable">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤ã¨å¤‰æ•°å("first stage isClear:"ãªã©)</param>
 /// <returns></returns>
 bool FileJson::Read_BoolSave(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable) {
 	string fileName = filename_;
@@ -36,7 +37,7 @@ bool FileJson::Read_BoolSave(const char* filename_, const char* DesiredClass, co
 
 	try {
 		bool StageClear = m_json.at(DesiredClass_).at(variableName_).get<int>() == 1;
-		// •Ï”‚Ì’l‚ğo—Í
+		// å¤‰æ•°ã®å€¤ã‚’å‡ºåŠ›
 		cout << classVariable_ << (StageClear ? "Yes" : "No") << endl;
 		return StageClear;
 	} catch (nlohmann::json::type_error& e) {
@@ -50,36 +51,36 @@ bool FileJson::Read_BoolSave(const char* filename_, const char* DesiredClass, co
 	return false;
 }
 /// <summary>
-/// jsonƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+/// jsonãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 /// </summary>
-/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-/// <param name="DesiredClass">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-/// <param name="classVariable">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ‚Æ•Ï”–¼("first stage isClear:"‚È‚Ç)</param>
-/// <param name="readVector">“Ç‚İ‚ŞƒxƒNƒgƒ‹</param>
+/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+/// <param name="DesiredClass">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+/// <param name="classVariable">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤ã¨å¤‰æ•°å("first stage isClear:"ãªã©)</param>
+/// <param name="readVector">èª­ã¿è¾¼ã‚€ãƒ™ã‚¯ãƒˆãƒ«</param>
 /// <returns></returns>
 Vector3 FileJson::Read_Vector3Save(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, Vector3 readVector) {
 	try {
-		// ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 		std::ifstream file(filename_);
 		if (!file.is_open()) {
 			std::cerr << "Error: Cannot open file " << filename_ << std::endl;
 			return readVector;
 		}
 
-		// JSON‚ğƒp[ƒX
+		// JSONã‚’ãƒ‘ãƒ¼ã‚¹
 		nlohmann::json jsonData;
 		file >> jsonData;
 
-		// w’è‚³‚ê‚½ƒNƒ‰ƒX‚ğŒŸõ
+		// æŒ‡å®šã•ã‚ŒãŸã‚¯ãƒ©ã‚¹ã‚’æ¤œç´¢
 		if (jsonData.contains(DesiredClass)) {
 			auto& classData = jsonData[DesiredClass];
 
-			// ƒNƒ‰ƒX“à‚Ì•Ï”‚ğŒŸõ
+			// ã‚¯ãƒ©ã‚¹å†…ã®å¤‰æ•°ã‚’æ¤œç´¢
 			if (classData.contains(classVariable)) {
 				auto& variableData = classData[classVariable];
 
-				// •Ï”–¼‚ğŠm”F‚µAVector3ƒf[ƒ^‚ğæ“¾
+				// å¤‰æ•°åã‚’ç¢ºèªã—ã€Vector3ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 				if (variableData.contains(variablename)) {
 					auto vectorData = variableData[variablename];
 					if (vectorData.contains("x") && vectorData.contains("y") && vectorData.contains("z")) {
@@ -92,24 +93,24 @@ Vector3 FileJson::Read_Vector3Save(const char* filename_, const char* DesiredCla
 		std::cerr << "Error: Exception while reading JSON: " << e.what() << std::endl;
 	}
 
-	// ƒGƒ‰[‚ÍƒfƒtƒHƒ‹ƒg’l‚ğ•Ô‚·
+	// ã‚¨ãƒ©ãƒ¼æ™‚ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¿”ã™
 	return readVector;
 }
 
 /// <summary>
-/// jsonIntƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+/// jsonIntãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 /// </summary>
-/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-/// <param name="DesiredClass">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-/// <param name="classVariable">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ‚Æ•Ï”–¼("first stage isClear:"‚È‚Ç)</param>
-/// <param name="readInt">“Ç‚İ‚ŞintŒ^‚Ì’l</param>
+/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+/// <param name="DesiredClass">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+/// <param name="classVariable">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤ã¨å¤‰æ•°å("first stage isClear:"ãªã©)</param>
+/// <param name="readInt">èª­ã¿è¾¼ã‚€intå‹ã®å€¤</param>
 /// <returns></returns>
 int FileJson::Read_IntSave(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, int readInt) {
-	// JSONƒIƒuƒWƒFƒNƒg‚Ìì¬
+	// JSONã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	json m_json;
 
-	// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚éê‡‚ÍŠù‘¶‚Ìƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯æ—¢å­˜ã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	ifstream input_file(filename_);
 	if (input_file.is_open()) {
 		try {
@@ -117,41 +118,41 @@ int FileJson::Read_IntSave(const char* filename_, const char* DesiredClass, cons
 		} catch (nlohmann::json::parse_error& e) {
 			cerr << "JSON parse error: " << e.what() << endl;
 			input_file.close();
-			return 0; // ƒfƒtƒHƒ‹ƒg’l‚ğ•Ô‚·
+			return 0; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¿”ã™
 		}
 		input_file.close();
 	}
 
-	// w’è‚³‚ê‚½ƒNƒ‰ƒX‚Æ•Ï”–¼‚Éintƒf[ƒ^‚ğ•Û‘¶
+	// æŒ‡å®šã•ã‚ŒãŸã‚¯ãƒ©ã‚¹ã¨å¤‰æ•°åã«intãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
 	m_json[DesiredClass][classVariable][variablename] = readInt;
 
-	// JSONƒf[ƒ^‚ğƒtƒ@ƒCƒ‹‚É‘‚«‚Ş
+	// JSONãƒ‡ãƒ¼ã‚¿ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚€
 	ofstream writing_file(filename_, ios::out);
 	if (!writing_file.is_open()) {
 		cerr << "Cannot open file: " << filename_ << endl;
-		return 0; // ƒfƒtƒHƒ‹ƒg’l‚ğ•Ô‚·
+		return 0; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¿”ã™
 	}
 
-	writing_file << m_json.dump(4) << endl; // 4ƒXƒy[ƒX‚ÌƒCƒ“ƒfƒ“ƒg‚Å®Œ`
+	writing_file << m_json.dump(4) << endl; // 4ã‚¹ãƒšãƒ¼ã‚¹ã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã§æ•´å½¢
 	writing_file.close();
 
-	// •Û‘¶‚µ‚½intƒf[ƒ^‚ğ•Ô‚·
+	// ä¿å­˜ã—ãŸintãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
 	return readInt;
 }
 
 /// <summary>
-/// jsonBoolƒtƒ@ƒCƒ‹‘‚«‚İ
+/// jsonBoolãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 /// </summary>
-/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-/// <param name="DesiredClass">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-/// <param name="classVariable">“Ç‚İ‚İ‚½‚¢•Ï”ŒQ‚Æ•Ï”–¼("first stage isClear:"‚È‚Ç)</param>
+/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+/// <param name="DesiredClass">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+/// <param name="classVariable">èª­ã¿è¾¼ã¿ãŸã„å¤‰æ•°ç¾¤ã¨å¤‰æ•°å("first stage isClear:"ãªã©)</param>
 /// <returns></returns>
 bool FileJson::White_BoolSave(const char* filename_, const char* DesiredClass, const char* variablename, const int classVariable) {
-	// JSONƒIƒuƒWƒFƒNƒg‚Ìì¬
+	// JSONã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	json m_json;
 
-	// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚éê‡‚ÍŠù‘¶‚Ìƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯æ—¢å­˜ã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	ifstream input_file(filename_);
 	if (input_file.is_open()) {
 		try {
@@ -166,31 +167,31 @@ bool FileJson::White_BoolSave(const char* filename_, const char* DesiredClass, c
 	    {variablename, classVariable}
     };
 
-	// JSONƒf[ƒ^‚ğƒtƒ@ƒCƒ‹‚É‘‚«‚Ş
+	// JSONãƒ‡ãƒ¼ã‚¿ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚€
 	ofstream writing_file(filename_, ios::out);
 	if (!writing_file.is_open()) {
 		cerr << "Cannot open file: " << filename_ << endl;
 		return true;
 	}
 
-	writing_file << m_json.dump(4) << endl; // 4ƒXƒy[ƒX‚ÌƒCƒ“ƒfƒ“ƒg‚Å®Œ`
+	writing_file << m_json.dump(4) << endl; // 4ã‚¹ãƒšãƒ¼ã‚¹ã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã§æ•´å½¢
 	writing_file.close();
 
 	return false;
 }
 /// <summary>
-/// jsonVector3ƒtƒ@ƒCƒ‹‘‚«‚İ
+/// jsonVector3ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 /// </summary>
-/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-/// <param name="DesiredClass">‘‚«‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-/// <param name="whiteVector">‘‚«‚ŞVector3</param>
+/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+/// <param name="DesiredClass">æ›¸ãè¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+/// <param name="whiteVector">æ›¸ãè¾¼ã‚€Vector3</param>
 /// <returns></returns>
 Vector3 FileJson::White_Vector3Save(const char* filename_, const char* DesiredClass, const char* variablename, Vector3 whiteVector) {
-	// JSONƒIƒuƒWƒFƒNƒg‚Ìì¬
+	// JSONã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	json m_json;
 
-	// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚éê‡‚ÍŠù‘¶‚Ìƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯æ—¢å­˜ã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	ifstream input_file(filename_);
 	if (input_file.is_open()) {
 		try {
@@ -198,41 +199,41 @@ Vector3 FileJson::White_Vector3Save(const char* filename_, const char* DesiredCl
 		} catch (nlohmann::json::parse_error& e) {
 			cerr << "JSON parse error: " << e.what() << endl;
 			input_file.close();
-			return Vector3(); // ƒfƒtƒHƒ‹ƒg’l‚ğ•Ô‚·
+			return Vector3(); // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¿”ã™
 		}
 		input_file.close();
 	}
 
-	// w’è‚³‚ê‚½ƒNƒ‰ƒX‚Æ•Ï”–¼‚ÉVector3ƒf[ƒ^‚ğ•Û‘¶
+	// æŒ‡å®šã•ã‚ŒãŸã‚¯ãƒ©ã‚¹ã¨å¤‰æ•°åã«Vector3ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
 	m_json[DesiredClass][variablename] = {whiteVector.x, whiteVector.y, whiteVector.z};
 
-	// JSONƒf[ƒ^‚ğƒtƒ@ƒCƒ‹‚É‘‚«‚Ş
+	// JSONãƒ‡ãƒ¼ã‚¿ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚€
 	ofstream writing_file(filename_, ios::out);
 	if (!writing_file.is_open()) {
 		cerr << "Cannot open file: " << filename_ << endl;
-		return Vector3(); // ƒfƒtƒHƒ‹ƒg’l‚ğ•Ô‚·
+		return Vector3(); // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¿”ã™
 	}
 
-	writing_file << m_json.dump(4) << endl; // 4ƒXƒy[ƒX‚ÌƒCƒ“ƒfƒ“ƒg‚Å®Œ`
+	writing_file << m_json.dump(4) << endl; // 4ã‚¹ãƒšãƒ¼ã‚¹ã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã§æ•´å½¢
 	writing_file.close();
 
-	// •Û‘¶‚µ‚½Vector3ƒf[ƒ^‚ğ•Ô‚·
+	// ä¿å­˜ã—ãŸVector3ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™
 	return whiteVector;
 }
 
 /// <summary>
-/// jsonIntƒtƒ@ƒCƒ‹‘‚«‚İ
+/// jsonIntãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
 /// </summary>
-/// <param name="filename_">ƒtƒ@ƒCƒ‹–¼</param>
-/// <param name="DesiredClass">‘‚«‚İ‚½‚¢•Ï”ŒQ("firstStage"‚È‚Ç)</param>
-/// <param name="variablename">•Ï”–¼("isClear"‚È‚Ç)</param>
-/// <param name="whiteInt">“Ç‚İ‚ŞintŒ^‚Ì’l</param>
+/// <param name="filename_">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+/// <param name="DesiredClass">æ›¸ãè¾¼ã¿ãŸã„å¤‰æ•°ç¾¤("firstStage"ãªã©)</param>
+/// <param name="variablename">å¤‰æ•°å("isClear"ãªã©)</param>
+/// <param name="whiteInt">èª­ã¿è¾¼ã‚€intå‹ã®å€¤</param>
 /// <returns></returns>
 int FileJson::White_IntSave(const char* filename_, const char* DesiredClass, const char* variablename, int whiteInt) {
-	// JSONƒIƒuƒWƒFƒNƒg‚Ìì¬
+	// JSONã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	json m_json;
 
-	// ƒtƒ@ƒCƒ‹‚ª‘¶İ‚·‚éê‡‚ÍŠù‘¶‚Ìƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯æ—¢å­˜ã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	ifstream input_file(filename_);
 	if (input_file.is_open()) {
 		try {
@@ -240,22 +241,22 @@ int FileJson::White_IntSave(const char* filename_, const char* DesiredClass, con
 		} catch (nlohmann::json::parse_error& e) {
 			cerr << "JSON parse error: " << e.what() << endl;
 			input_file.close();
-			return int(); // ƒfƒtƒHƒ‹ƒg’l‚ğ•Ô‚·
+			return int(); // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¿”ã™
 		}
 		input_file.close();
 	}
 
-	// w’è‚³‚ê‚½ƒNƒ‰ƒX‚Æ•Ï”–¼‚ÉVector3ƒf[ƒ^‚ğ•Û‘¶
+	// æŒ‡å®šã•ã‚ŒãŸã‚¯ãƒ©ã‚¹ã¨å¤‰æ•°åã«Vector3ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
 	m_json[DesiredClass][variablename] = {whiteInt};
 
-	// JSONƒf[ƒ^‚ğƒtƒ@ƒCƒ‹‚É‘‚«‚Ş
+	// JSONãƒ‡ãƒ¼ã‚¿ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«æ›¸ãè¾¼ã‚€
 	ofstream writing_file(filename_, ios::out);
 	if (!writing_file.is_open()) {
 		cerr << "Cannot open file: " << filename_ << endl;
-		return int(); // ƒfƒtƒHƒ‹ƒg’l‚ğ•Ô‚·
+		return int(); // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’è¿”ã™
 	}
 
-	writing_file << m_json.dump(4) << endl; // 4ƒXƒy[ƒX‚ÌƒCƒ“ƒfƒ“ƒg‚Å®Œ`
+	writing_file << m_json.dump(4) << endl; // 4ã‚¹ãƒšãƒ¼ã‚¹ã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã§æ•´å½¢
 	writing_file.close();
 
 	return whiteInt;
