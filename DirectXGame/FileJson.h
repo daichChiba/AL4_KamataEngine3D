@@ -1,69 +1,44 @@
+// FileJson.h
 #pragma once
-#include <iostream>
-#include <fstream>
 #include "nlohmann/json.hpp"
-#include<KamataEngine.h>
+#include <KamataEngine.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+
+using json = nlohmann::json;
 using namespace KamataEngine;
+
 namespace FileJson {
-	/// <summary>
-	/// jsonBoolファイル読み込み
-	/// </summary>
-	/// <param name="filename_">ファイル名</param>
-	/// <param name="DesiredClass">読み込みたい変数群("firstStage"など)</param>
-	/// <param name="variablename">変数名("isClear"など)</param>
-	/// <param name="classVariable">読み込みたい変数群と変数名("first stage isClear:"など)</param>
-	/// <returns></returns>
-	static bool Read_BoolSave(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable);
-	/// <summary>
-	/// jsonVector3ファイル読み込み
-	/// </summary>
-	/// <param name="filename_">ファイル名</param>
-	/// <param name="DesiredClass">読み込みたい変数群("firstStage"など)</param>
-	/// <param name="variablename">変数名("isClear"など)</param>
-	/// <param name="classVariable">読み込みたい変数群と変数名("first stage isClear:"など)</param>
-	/// <param name="readVector">読み込むベクトル</param>
-	/// <returns></returns>
-	Vector3 Read_Vector3Save(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, Vector3 readVector);
 
-	/// <summary>
-	/// jsonIntファイル読み込み
-	/// </summary>
-	/// <param name="filename_">ファイル名</param>
-	/// <param name="DesiredClass">読み込みたい変数群("firstStage"など)</param>
-	/// <param name="variablename">変数名("isClear"など)</param>
-	/// <param name="classVariable">読み込みたい変数群と変数名("first stage isClear:"など)</param>
-	/// <param name="readInt">読み込むint型の値</param>
-	/// <returns></returns>
-	static int Read_IntSave(const char* filename_, const char* DesiredClass, const char* variablename, const char* classVariable, int readInt);
+class FileAccessor {
+public:
+	FileAccessor(const std::string& filename);
+	~FileAccessor();
 
-	/// <summary>
-	/// jsonBoolファイル書き込み
-	/// </summary>
-	/// <param name="filename_">ファイル名</param>
-	/// <param name="DesiredClass">書き込みたい変数群("firstStage"など)</param>
-	/// <param name="variablename">変数名("isClear"など)</param>
-	/// <param name="classVariable">書き込みたい変数群と変数名("first stage isClear:"など)</param>
-	/// <returns></returns>
-	static bool White_BoolSave(const char* filename_, const char* DesiredClass, const char* variablename, const int classVariable);
+	// JSONから値を読み込むための汎用的な関数
+	template<typename T> T Read(const std::string& desiredClass, const std::string& variableName, const T& defaultValue) const;
 
-	/// <summary>
-	/// jsonVector3ファイル書き込み
-	/// </summary>
-	/// <param name="filename_">ファイル名</param>
-	/// <param name="DesiredClass">書き込みたい変数群("firstStage"など)</param>
-	/// <param name="variablename">変数名("isClear"など)</param>
-	/// <param name="whiteVector">書き込むVector3</param>
-	/// <returns></returns>
-	Vector3 White_Vector3Save(const char* filename_, const char* DesiredClass, const char* variablename, Vector3 whiteVector);
+	// JSONに値を書き込むための汎用的な関数
+	template<typename T> void Write(const std::string& desiredClass, const std::string& variableName, const T& value);
 
-	/// <summary>
-	/// jsonIntファイル書き込み
-	/// </summary>
-	/// <param name="filename_">ファイル名</param>
-	/// <param name="DesiredClass">書き込みたい変数群("firstStage"など)</param>
-	/// <param name="variablename">変数名("isClear"など)</param>
-	/// <param name="whiteInt">読み込むint型の値</param>
-	/// <returns></returns>
-	static int White_IntSave(const char* filename_, const char* DesiredClass, const char* variablename, int whiteInt);
+	// Vector3を読み書きするための特殊化
+	Vector3 ReadVector3(const std::string& desiredClass, const std::string& variableName, const Vector3& defaultValue) const;
+	void WriteVector3(const std::string& desiredClass, const std::string& variableName, const Vector3& value);
 
+	// ファイルからJSONデータをロードする
+	void LoadJsonFromFile();
+
+	// JSONデータをファイルに保存する
+	void SaveJsonToFile();
+
+private:
+	std::string filename_;
+	std::ifstream inputFile_;
+	std::ofstream outputFile_;
+	json jsonData_;
 };
+
+} // namespace FileJson

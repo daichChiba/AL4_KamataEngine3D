@@ -292,7 +292,8 @@ void GameScene::LoadEnemyPopData() {
 	// for (int32_t i = 0; i < 3; ++i) {
 	Enemy* newEnemy = new Enemy();
 	Vector3 enemyPosition{};
-	enemyPosition = FileJson::Read_Vector3Save("Resources/SaveData/Enemy.json", "enemy", "enemy_1", "pos", enemyPosition);
+	FileJson::FileAccessor fileAccessor("Resources/SaveData/Enemy.json");
+	enemyPosition = fileAccessor.ReadVector3("enemy", "enemy_1", Vector3());
 	newEnemy->Initialize(model_, enemyTextureHandle_, enemyPosition);
 	newEnemy->SetPlayer(player_);
 	newEnemy->SetGameScene(this);
