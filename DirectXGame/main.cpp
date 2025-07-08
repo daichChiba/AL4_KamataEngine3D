@@ -1,10 +1,10 @@
 #include <KamataEngine.h>
 
 using namespace KamataEngine;
-#include"../DirectXGame/scene/GameScene.h"
-#include "../DirectXGame/scene/TitleScene.h"
-#include "../DirectXGame/ClearScene.h"
-#include"../DirectXGame/OverScene.h"
+#include"scene/GameScene.h"
+#include "scene/TitleScene.h"
+#include "scene/ClearScene.h"
+#include"scene/OverScene.h"
 
 
 // シーン（型）

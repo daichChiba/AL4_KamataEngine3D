@@ -1,10 +1,10 @@
 #pragma once
 #include<KamataEngine.h>
-#include "../Player.h"
-#include "../Enemy.h"
+#include "../Shooting/player/Player.h"
+#include "../Shooting/enemy/Enemy.h"
 #include <vector>
-#include "../SkyDome.h"
-#include "../RailCamera.h"
+#include "../Shooting/SkyDome.h"
+#include "../Shooting/RailCamera.h"
 
 using namespace KamataEngine;
 

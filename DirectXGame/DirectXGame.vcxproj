@@ -45,14 +45,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\External\DirectXTex\include;$(ProjectDir)..\External\imgui;$(ProjectDir)..\External\KamataEngine\include;$(IncludePath);$(ProjectDir);$(ProjectDir)/scene;</IncludePath>
+    <IncludePath>$(ProjectDir)..\External\DirectXTex\include;$(ProjectDir)..\External\imgui;$(ProjectDir)..\External\KamataEngine\include;$(IncludePath);$(ProjectDir);$(ProjectDir);$(ProjectDir)/scene;</IncludePath>
     <LibraryPath>$(ProjectDir)..\External\KamataEngine\lib\$(Configuration);$(ProjectDir)..\External\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\External\DirectXTex\include;$(ProjectDir)..\External\imgui;$(ProjectDir)..\External\KamataEngine\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\External\DirectXTex\include;$(ProjectDir)..\External\imgui;$(ProjectDir)..\External\KamataEngine\include;$(IncludePath);$(ProjectDir);</IncludePath>
     <LibraryPath>$(ProjectDir)..\External\KamataEngine\lib\$(Configuration);$(ProjectDir)..\External\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
@@ -106,20 +106,20 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ClearScene.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyBullet.cpp" />
-    <ClCompile Include="InputEx.cpp" />
+    <ClCompile Include="scene\ClearScene.cpp" />
+    <ClCompile Include="Shooting\enemy\Enemy.cpp" />
+    <ClCompile Include="Shooting\bullet\EnemyBullet.cpp" />
+    <ClCompile Include="etc\InputEx.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MathUtliltyForText.cpp" />
-    <ClCompile Include="OverScene.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerBullet.cpp" />
-    <ClCompile Include="RailCamera.cpp" />
+    <ClCompile Include="etc\MathUtliltyForText.cpp" />
+    <ClCompile Include="scene\OverScene.cpp" />
+    <ClCompile Include="Shooting\player\Player.cpp" />
+    <ClCompile Include="Shooting\bullet\PlayerBullet.cpp" />
+    <ClCompile Include="Shooting\RailCamera.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
-    <ClCompile Include="SkyDome.cpp" />
-    <ClCompile Include="WorldTransformEx.cpp" />
+    <ClCompile Include="Shooting\SkyDome.cpp" />
+    <ClCompile Include="etc\WorldTransformEx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">
@@ -197,17 +197,17 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClearScene.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyBullet.h" />
-    <ClInclude Include="MathUtliltyForText.h" />
-    <ClInclude Include="OverScene.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PlayerBullet.h" />
-    <ClInclude Include="RailCamera.h" />
+    <ClInclude Include="scene\ClearScene.h" />
+    <ClInclude Include="Shooting\enemy\Enemy.h" />
+    <ClInclude Include="Shooting\bullet\EnemyBullet.h" />
+    <ClInclude Include="etc\MathUtliltyForText.h" />
+    <ClInclude Include="scene\OverScene.h" />
+    <ClInclude Include="Shooting\player\Player.h" />
+    <ClInclude Include="Shooting\bullet\PlayerBullet.h" />
+    <ClInclude Include="Shooting\RailCamera.h" />
     <ClInclude Include="scene\GameScene.h" />
     <ClInclude Include="scene\TitleScene.h" />
-    <ClInclude Include="SkyDome.h" />
+    <ClInclude Include="Shooting\SkyDome.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

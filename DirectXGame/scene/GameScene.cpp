@@ -1,5 +1,5 @@
 #include "GameScene.h"
-#include "../MathUtliltyForText.h"
+#include "../etc/MathUtliltyForText.h"
 #include <cassert>
 
 using namespace KamataEngine;

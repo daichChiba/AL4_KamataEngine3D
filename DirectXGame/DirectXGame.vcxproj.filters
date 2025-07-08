@@ -22,6 +22,36 @@
     <Filter Include="ソース ファイル\scene">
       <UniqueIdentifier>{31a8a4aa-71ae-48cd-852d-e2395b3fc6a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\shooting">
+      <UniqueIdentifier>{bd8c4fed-afe3-446b-84d9-a7cf78af6341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\shooting">
+      <UniqueIdentifier>{660f4a88-bfb5-4727-9a61-b47ece2d5bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\shooting\enemy">
+      <UniqueIdentifier>{60b2ba25-4814-4c20-833a-7c8418468505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\shooting\player">
+      <UniqueIdentifier>{7295b830-6de7-4075-acae-ec167b9ea2ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\shooting\enemy">
+      <UniqueIdentifier>{b48c0fbc-f2ee-4f17-944d-07f7e488911c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\shooting\player">
+      <UniqueIdentifier>{f5fd5903-beaa-4310-8483-f974f8ff67a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\shooting\bullet">
+      <UniqueIdentifier>{abac8096-4882-4921-81b3-f7a4efa6c9a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\shooting\bullet">
+      <UniqueIdentifier>{52ae3b41-ac93-4571-91ca-1ba0bf8ea7be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\etc">
+      <UniqueIdentifier>{47ecdfe1-2fdb-4d12-8a5b-aa4f994ee90d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\etc">
+      <UniqueIdentifier>{fbac0e7c-e0c3-4053-873a-6aca1f5e38cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,41 +60,41 @@
     <ClCompile Include="scene\GameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="MathUtliltyForText.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldTransformEx.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SkyDome.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="InputEx.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="RailCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="scene\TitleScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="ClearScene.cpp">
+    <ClCompile Include="scene\ClearScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="OverScene.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="scene\OverScene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooting\enemy\Enemy.cpp">
+      <Filter>ソース ファイル\shooting\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooting\bullet\EnemyBullet.cpp">
+      <Filter>ソース ファイル\shooting\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooting\bullet\PlayerBullet.cpp">
+      <Filter>ソース ファイル\shooting\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooting\player\Player.cpp">
+      <Filter>ソース ファイル\shooting\player</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooting\SkyDome.cpp">
+      <Filter>ソース ファイル\shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="Shooting\RailCamera.cpp">
+      <Filter>ソース ファイル\shooting</Filter>
+    </ClCompile>
+    <ClCompile Include="etc\InputEx.cpp">
+      <Filter>ソース ファイル\etc</Filter>
+    </ClCompile>
+    <ClCompile Include="etc\MathUtliltyForText.cpp">
+      <Filter>ソース ファイル\etc</Filter>
+    </ClCompile>
+    <ClCompile Include="etc\WorldTransformEx.cpp">
+      <Filter>ソース ファイル\etc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,35 +150,35 @@
     <ClInclude Include="scene\GameScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MathUtliltyForText.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SkyDome.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="RailCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="scene\TitleScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="ClearScene.h">
+    <ClInclude Include="scene\ClearScene.h">
       <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
-    <ClInclude Include="OverScene.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="scene\OverScene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooting\enemy\Enemy.h">
+      <Filter>ヘッダー ファイル\shooting\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooting\bullet\EnemyBullet.h">
+      <Filter>ヘッダー ファイル\shooting\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooting\bullet\PlayerBullet.h">
+      <Filter>ヘッダー ファイル\shooting\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooting\player\Player.h">
+      <Filter>ヘッダー ファイル\shooting\player</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooting\SkyDome.h">
+      <Filter>ヘッダー ファイル\shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="Shooting\RailCamera.h">
+      <Filter>ヘッダー ファイル\shooting</Filter>
+    </ClInclude>
+    <ClInclude Include="etc\MathUtliltyForText.h">
+      <Filter>ヘッダー ファイル\etc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
